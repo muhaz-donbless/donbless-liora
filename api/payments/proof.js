@@ -1,3 +1,6 @@
+
+"use strict";
+
 const { readFile } = require("../../lib/github-storage");
 
 function getMimeType(path) {
@@ -18,16 +21,6 @@ function getMimeType(path) {
 
 module.exports = async (req, res) => {
   res.setHeader("Cache-Control", "no-store");
-
-  const secret = process.env.ADMIN_SECRET;
-  const auth = req.headers.authorization || "";
-
-  if (!secret || auth !== `Bearer ${secret}`) {
-    return res.status(401).json({
-      ok: false,
-      message: "Unauthorized"
-    });
-  }
 
   if (req.method !== "GET") {
     return res.status(405).json({
